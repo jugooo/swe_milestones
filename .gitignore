@@ -1,0 +1,5 @@
+yvenv
+fly.toml
+.vscode
+__pycache__
+.env

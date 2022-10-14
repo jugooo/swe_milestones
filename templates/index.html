@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="static/css/index.css">
+    </head>
+
+    <body>
+        <h1 id="h1_title" class="h1_title_style">Top 10 Movies of the Week</h1>
+        <h4 id="h4_subtitle" class="h4_subtitle_style">According to TMDB</h4>
+        <div class="movie_list_div">
+            {% for movie in movies_list %}
+            <ul>
+                <li>
+                    <a href="#">{{movie}}</a> <br>
+                </li>
+            </ul>
+            {% endfor %}
+        </div>
+
+        
+
+        <!-- {% if name %} If statement Start
+        <h2>and hello to {{name}}</h2>
+        {% endif %} If Statement end -->
+        <!-- <button id="button_main">Button</button> -->
+
+        <script type="text/javascript" src="../static/demo.js"></script>
+    </body>
+</html>

@@ -1,0 +1,36 @@
+body{
+    background-color: honeydew;
+}
+.h1_title_style{
+    display: flex;
+    height: 75px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 40px;
+    letter-spacing: 1.5px;
+}
+
+.h4_subtitle_style{
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.movie_list_div{
+    padding: 10px 0px 10px 0px;
+    background-color: salmon;
+}
+
+.movie_list_div ul{
+    /* display: block; */
+    height: 20px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    letter-spacing: 1px;
+}
