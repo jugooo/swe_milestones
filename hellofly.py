@@ -1,6 +1,6 @@
 from crypt import methods
 import flask
-from custom_classes import get_top_10_weekly_trending_movies
+from custom_classes import get_top_10_weekly_trending_movies,get_wiki_page,open_wiki_page
 from dotenv import load_dotenv
 import os
 
@@ -33,9 +33,10 @@ def handle_selection():
 @app.route('/movie_information/<movie>')
 def render_movie(movie):
     '''Render Movie Information From Wiki'''
-    print(movie)
+    url = get_wiki_page(movie)
+    open_wiki_page(url) #Opens Wiki page in a new tab
     return flask.render_template('movie.html')
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
     #Run App
     app.run()

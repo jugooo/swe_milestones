@@ -11,7 +11,7 @@
             {% for movie in movies_list %}
                 <form method="POST" action="/handle_selection">
                         <input type="hidden" name="movie_title" value="{{movie}}">
-                        <button class="movie_list_button" type="submit">{{movie}}</button>
+                        <button class="movie_list_button" type="submit" onclick="open_wiki_page()">{{movie}}</button>
                 </form>
             {% endfor %}
         </div>
