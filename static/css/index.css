@@ -31,10 +31,9 @@ body{
     letter-spacing: 1px;
 }
 
-.movie_list_div form{
-    /* display: inline-block; */
-    /* text-align: center;
-    justify-content: center; */
+.subtitle_div{
+    justify-content: center;
+    align-items: center;
 }
 
 .movie_list_button {

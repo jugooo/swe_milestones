@@ -5,15 +5,13 @@
     </head>
 
     <body>
-        <h1 id="h1_title" class="h1_title_style">Top 10 Movies of the Week</h1>
-        <h4 id="h4_subtitle" class="h4_subtitle_style">According to TMDB</h4>
-        <div class="movie_list_div">
-            {% for movie in movies_list %}
-                <form method="POST" action="/handle_selection">
-                        <input type="hidden" name="movie_title" value="{{movie}}">
-                        <button class="movie_list_button" type="submit" onclick="open_wiki_page()">{{movie}}</button>
-                </form>
-            {% endfor %}
+        <h1 id="h1_title" class="h1_title_style">{{movie_title}}</h1>
+        <div class="subtitle_div">
+            <h4 id="h4_subtitle" class="h4_subtitle_style">{{movie_overview}}</h4>
+        </div>
+        
+        <div class="genre_div">
+            <h4 class="movie_genre_style">Genres: {% for genre in movie_genre %} {{genre}} {% endfor %}</h4>
         </div>
 
         <script type="text/javascript" src="../static/demo.js"></script>
