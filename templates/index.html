@@ -6,13 +6,24 @@
 
     <body>
         <h1 id="h1_title" class="h1_title_style">{{movie_title}}</h1>
+        <div class="movie_poster_div">
+            <img class="movie_poster_style" src="{{movie_poster_path}}" alt="">
+        </div>
         <div class="subtitle_div">
             <h4 id="h4_subtitle" class="h4_subtitle_style">{{movie_overview}}</h4>
-        </div>
-        
-        <div class="genre_div">
             <h4 class="movie_genre_style">Genres: {% for genre in movie_genre %} {{genre}} {% endfor %}</h4>
         </div>
+
+        <div class="btn_group">
+            <a href="{{wiki_link}}" target="_blank" class="movie_button" type="submit">Wikipage</a>
+            
+            <a href="https://www.youtube.com/watch?v=7KXmsNDiG7M" target="_blank" class="movie_button" type="submit">Watch Movie Illegally</a>
+
+            <form action="/" id="refresh_form">
+                <a href="" class="movie_button" form="refresh_form" type="submit">New Movie Roll</a>
+            </form>
+        </div>
+
 
         <script type="text/javascript" src="../static/demo.js"></script>
     </body>
