@@ -1,12 +1,12 @@
 import flask
 import static.custom_classes as cc
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 import os
 
 #Set Environment Variables
-# load_dotenv()
-# TMDB_API_KEY = os.getenv('TMDB_API_KEY')
-TMDB_API_KEY = ""
+load_dotenv()
+TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+# TMDB_API_KEY = ""
 
 #Initalize App
 app = flask.Flask(__name__)
@@ -36,5 +36,5 @@ def index_page():
     # return flask.redirect(flask.url_for('index_page'))
 
 if __name__ == "__main__":
-    #Run App
+#     # Run App
     app.run()
