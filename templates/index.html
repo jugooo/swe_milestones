@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         <link rel="stylesheet" href="static/css/index.css">
+        <link rel="stylesheet" href="static/css/form_styles.css">
     </head>
 
     <body>
@@ -19,11 +20,42 @@
             
             <a href="https://www.youtube.com/watch?v=7KXmsNDiG7M" target="_blank" class="movie_button" type="submit">Watch Movie Illegally</a>
 
-            <form action="/" id="refresh_form">
+            <form action="/index" id="refresh_form">
                 <a href="" class="movie_button" form="refresh_form" type="submit">New Movie Roll</a>
             </form>
         </div>
 
+        <br>
+        <br>
+
+        <div class="review_form">
+            <form action="/handle_review_submit" method="POST">
+                <input type="hidden" value="{{username}}" name="username">
+                <div>
+                    <label class="input_title" style="font-size: 22px; font: weight 400px;;">Movie ID {{movie_id}}</label><br><br>
+                    <input type="hidden" value="{{movie_id}}" name="movie_id">
+                    <!--Change Movie ID to the label-->
+                </div>
+
+                <div>
+                    <label class="input_title">Rating out of 5</label><br>
+                    <input class="input_text" type="text" name="movie_rating" value="Rating">
+                </div>
+
+                <div>
+                    <label class="input_title">Comment</label><br>
+                    <input class="input_text" type="text" name="movie_comment" value="Leave a comment">
+                </div>
+                <br>
+                <button type="submit" class="movie_button">Submit</button>
+            </form>
+        </div>
+
+        <!--Review Forms-->
+        <div>
+            <h2>Reviews</h2>
+            
+        </div>
 
         <script type="text/javascript" src="../static/demo.js"></script>
     </body>

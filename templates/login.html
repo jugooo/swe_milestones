@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="static/css/form_styles.css">
+        <link rel="stylesheet" href="static/css/index.css">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div>
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+            {% endwith %}
+        <h1>Login Page</h1>
+        <form method="POST" action="/handle_login">
+            <div>
+                <p class="input_title">Username</p>
+                <input class="input_text" name="username_input"><br>
+            </div>
+            <div>
+                <p class="input_title">Email</p>
+                <input class="input_text"  name="email_input"><br><br>
+            </div>
+            <button type="submit" class="movie_button"> Login</button>
+        </form>
+    </body>
+</html>

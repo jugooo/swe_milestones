@@ -1,6 +1,7 @@
 from random import randint
 import requests
 
+
 #Retrieve top 10 movies from Movie-API
 def get_top_10_weekly_trending_movies(TMDB_API_KEY):
     '''Gets response in JSON and prints the title of top 10 movies
@@ -22,8 +23,17 @@ def get_top_10_weekly_trending_movies(TMDB_API_KEY):
     movie_genres_list = random_movie['genre_ids']
     filtered_genre_list = configure_genre_ids(TMDB_API_KEY,movie_genres_list)
     movie_poster_url="https://image.tmdb.org/t/p/w300/"+random_movie['poster_path']
-
-    return random_movie['title'],random_movie['overview'],filtered_genre_list,movie_poster_url #Returns Title, overview, posterpath
+    movie_id = random_movie['id']
+    movie_dict = {
+        'title':random_movie['title'],
+        'overview':random_movie['overview'],
+        'genres':filtered_genre_list,
+        'poster_url':movie_poster_url,
+        'id':random_movie['id'],
+        }
+    # print(movie_dict)
+    # return random_movie['title'],random_movie['overview'],filtered_genre_list,movie_poster_url, movie_id #Returns Title, overview, genre list, posterpath
+    return movie_dict
 
 def configure_genre_ids(TMDB_API_KEY,genres_list):
     url = "https://api.themoviedb.org/3/genre/movie/list?api_key="+TMDB_API_KEY+"&language=en-US"
@@ -56,10 +66,6 @@ def get_wiki_page(movie_title):
     response = session.get(url=URL, params=params)
     data = response.json()
     return "https://en.wikipedia.org/w/index.php?curid="+str(data['query']['search'][0]['pageid'])
-        
 
-#Depreciated
-# def open_wiki_page(url):
-#     '''Open Webpage'''
-#     print(url)
-#     webbrowser.open_new_tab(url)
+
+# def load_movies_to_database():

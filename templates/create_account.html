@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="static/css/form_styles.css">
+        <link rel="stylesheet" href="static/css/index.css">
+    </head>
+    <body>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Create Account</h1>
+        <form action="/handle_create_account" method="POST">
+            <div>
+                <p class="input_title">Username</p>
+                <input class="input_text" type="text" name="username_input"><br>
+            </div>
+            <div>
+                <p class="input_title">Email</p>
+                <input class="input_text"type="text" name="email_input"><br><br>
+            </div>
+            <button type="submit" class="movie_button"> Create Account</button>
+        </form>
+    </body>
+</html>
