@@ -143,7 +143,7 @@ def index_page():
     movie_dict = cc.get_top_10_weekly_trending_movies(TMDB_API_KEY)
     movie_wiki_page = cc.get_wiki_page(movie_title=movie_dict['title'])
     # cc.open_wiki_page(movie_wiki_page) #Opens Wiki page in a new tab
-    # pull_reviews(movie_dict['id'])
+    pull_reviews(movie_dict['id'])
     return flask.render_template(
         'index.html',
         movie_title=movie_dict['title'],
@@ -152,12 +152,17 @@ def index_page():
         movie_genre=movie_dict['genres'],
         wiki_link=movie_wiki_page,movie_id=movie_dict['id'],
         username = current_user.username,
+        reviews = pull_reviews(movie_dict['id'])
         )
-# def pull_reviews(movie_id):
-#     reviews = Review.query.filter_by(movie_id=movie_id).all()
-#     print("Reviews")
-#     for result in reviews:
-#         print(type(result))
+def pull_reviews(movie_id):
+    review_dict = dict()
+    reviews = Review.query.filter_by(movie_id=movie_id).all()
+    return reviews
+    # print("Reviews")
+    # for result in reviews:
+    #     print(result, result.movie_id, result.user,result.rating,result.comment)
+    #     review_dict.
+
 
 @login_required
 @app.route('/handle_review_submit', methods=['GET','POST'])

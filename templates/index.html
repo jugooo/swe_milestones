@@ -27,35 +27,47 @@
 
         <br>
         <br>
+        <div class="review_section">
+            <h2>Submit a review!</h2>
+            <hr width="55%" align="center">
+            <div class="review_form">
+                <form action="/handle_review_submit" method="POST">
+                    <input type="hidden" value="{{username}}" name="username">
+                    <div>
+                        <label class="input_title" style="font-size: 22px; font: weight 400px;;">Movie ID {{movie_id}}</label><br><br>
+                        <input type="hidden" value="{{movie_id}}" name="movie_id">
+                        <!--Change Movie ID to the label-->
+                    </div>
 
-        <div class="review_form">
-            <form action="/handle_review_submit" method="POST">
-                <input type="hidden" value="{{username}}" name="username">
-                <div>
-                    <label class="input_title" style="font-size: 22px; font: weight 400px;;">Movie ID {{movie_id}}</label><br><br>
-                    <input type="hidden" value="{{movie_id}}" name="movie_id">
-                    <!--Change Movie ID to the label-->
-                </div>
+                    <div>
+                        <label class="input_title">Rating out of 5</label><br>
+                        <input class="input_text" type="text" name="movie_rating" value="Rating">
+                    </div>
 
-                <div>
-                    <label class="input_title">Rating out of 5</label><br>
-                    <input class="input_text" type="text" name="movie_rating" value="Rating">
-                </div>
-
-                <div>
-                    <label class="input_title">Comment</label><br>
-                    <input class="input_text" type="text" name="movie_comment" value="Leave a comment">
-                </div>
-                <br>
-                <button type="submit" class="movie_button">Submit</button>
-            </form>
+                    <div>
+                        <label class="input_title">Comment</label><br>
+                        <input class="input_text" type="text" name="movie_comment" value="Leave a comment">
+                    </div>
+                    <br>
+                    <button type="submit" class="movie_button">Submit</button>
+                </form>
+            </div>
         </div>
-
+        
         <!--Review Forms-->
         <div>
+            {% if reviews is defined %}
             <h2>Reviews</h2>
-            
+            <hr width="55%" align="center">
+            {% for rev in reviews %}
+            <div class="review_div">
+                <p class="review_text">Username: {{rev.user}}</p>
+                <p class="review_text">Rating: {{rev.rating}}/5</p>
+                <p class="review_text">Comment: {{rev.comment}}</p>
+            </div>
+            {% endfor %}
         </div>
+        {% endif %}
 
         <script type="text/javascript" src="../static/demo.js"></script>
     </body>

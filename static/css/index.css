@@ -114,3 +114,29 @@ body{
     margin-right: auto;
     display: inline-flex;
 }
+
+.review_div{
+    background-color: white;
+    margin-top: 20px;
+    margin-right: 30%;
+    margin-left: 30%;
+    height: 150px;
+    justify-content: center;
+    border-radius: 25px;
+    border: 1px solid black;
+}
+
+.review_text{
+    font-size: 20px;
+    font-weight: 600;
+}
+/* .review_section{
+    background-color: grey;
+    margin-top: 20px;
+    margin-right: 30%;
+    margin-left: 30%;
+    height: 150px;
+    justify-content: center;
+    border-radius: 25px;
+    border: 1px solid black;
+} */
