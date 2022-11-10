@@ -1,5 +1,5 @@
 - Clone the Repo
- $ git clone git@github.com:jugooo/milestone-1.git
+ $ git clone git@github.com:jugooo/swe_milestones.git
 
   run: $ python -m pip install -r requirements.txt
 
