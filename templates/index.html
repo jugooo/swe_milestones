@@ -1,74 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <link rel="stylesheet" href="static/css/index.css">
-        <link rel="stylesheet" href="static/css/form_styles.css">
-    </head>
 
-    <body>
-        <h1 id="h1_title" class="h1_title_style">{{movie_title}}</h1>
-        <div class="movie_poster_div">
-            <img class="movie_poster_style" src="{{movie_poster_path}}" alt="">
-        </div>
-        <div class="subtitle_div">
-            <h4 id="h4_subtitle" class="h4_subtitle_style">{{movie_overview}}</h4>
-            <h4 class="movie_genre_style">Genres: {% for genre in movie_genre %} {{genre}} {% endfor %}</h4>
-        </div>
+<head>
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/form_styles.css">
+</head>
 
-        <div class="btn_group">
-            <a href="{{wiki_link}}" target="_blank" class="movie_button" type="submit">Wikipage</a>
-            
-            <a href="https://www.youtube.com/watch?v=7KXmsNDiG7M" target="_blank" class="movie_button" type="submit">Watch Movie Illegally</a>
-
-            <form action="/index" id="refresh_form">
-                <a href="" class="movie_button" form="refresh_form" type="submit">New Movie Roll</a>
-            </form>
-        </div>
-
-        <br>
-        <br>
-        <div class="review_section">
-            <h2>Submit a review!</h2>
-            <hr width="55%" align="center">
-            <div class="review_form">
-                <form action="/handle_review_submit" method="POST">
-                    <input type="hidden" value="{{username}}" name="username">
-                    <div>
-                        <label class="input_title" style="font-size: 22px; font: weight 400px;;">Movie ID {{movie_id}}</label><br><br>
-                        <input type="hidden" value="{{movie_id}}" name="movie_id">
-                        <!--Change Movie ID to the label-->
-                    </div>
-
-                    <div>
-                        <label class="input_title">Rating out of 5</label><br>
-                        <input class="input_text" type="text" name="movie_rating" value="Rating">
-                    </div>
-
-                    <div>
-                        <label class="input_title">Comment</label><br>
-                        <input class="input_text" type="text" name="movie_comment" value="Leave a comment">
-                    </div>
-                    <br>
-                    <button type="submit" class="movie_button">Submit</button>
-                </form>
-            </div>
-        </div>
+<body>
+    <h1 id="h1_title" class="h1_title_style">{{book_title}}</h1>
+    <div class="movie_poster_div">
+        <img class="movie_poster_style" src="{{img_path}}" alt="">
+    </div>
+    <div class="subtitle_div">
+        <h4 id="h4_subtitle" class="h4_subtitle_style">Author: {{book_def}}</h4>
         
-        <!--Review Forms-->
-        <div>
-            {% if reviews is defined %}
-            <h2>Reviews</h2>
-            <hr width="55%" align="center">
-            {% for rev in reviews %}
-            <div class="review_div">
-                <p class="review_text">Username: {{rev.user}}</p>
-                <p class="review_text">Rating: {{rev.rating}}/5</p>
-                <p class="review_text">Comment: {{rev.comment}}</p>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
+    </div>
 
-        <script type="text/javascript" src="../static/demo.js"></script>
-    </body>
+    <div class="btn_group">
+        <form action="/handle_like_submit" id="like_button", method="POST">
+            <input type="hidden" value={{uid}} name="uid">
+            <input type="hidden" value="{{book_id}}" name="book_id">
+            <button class="movie_button" type="submit">Like</button>
+        </form>
+
+        <!-- <a href="https://www.youtube.com/watch?v=7KXmsNDiG7M" target="_blank" class="movie_button" type="submit">Watch
+            Movie Illegally</a> -->
+
+        <form action="/handle_dislike_submit" id="dislike_button" method="POST">
+            <input type="hidden" value={{uid}} name="uid">
+            <input type="hidden" value="{{book_id}}" name = "book_id">
+            <button class="movie_button" type="submit">Dislike</button>
+        </form>
+    </div>
+
+    <br>
+    <br>
+
+    <script type="text/javascript" src="../static/demo.js"></script>
+</body>
+
 </html>

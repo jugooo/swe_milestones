@@ -7,6 +7,11 @@ import static.custom_classes as cc
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager, login_user,current_user,login_required
+from sqlalchemy.orm import relationship
+from sqlalchemy import create_engine, select, MetaData, Table, and_
+import book_recommendation as br
+
+
 
 
 #Set Environment Variables
@@ -19,6 +24,7 @@ DATABASE_URL = os.getenv('DATABASE_URL')
 app = flask.Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #silences warning messages
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config.update(SECRET_KEY=os.urandom(24))
 db = SQLAlchemy(app)
 
@@ -32,6 +38,24 @@ class Person(UserMixin,db.Model):
     #Return the Person + username
     def __repr__(self) -> str:
         return '<Person%r>' % self.username
+
+# User Details
+
+
+#https://stackoverflow.com/questions/18807322/sqlalchemy-foreign-key-relationship-attributes
+#Like and Dislike List
+# User_ID Foreign Key
+# 0, 1 (Dislike, Like)(Future 3, 4)
+# We can query for Dislikes and likes easily by userID if isLike is 1 then its liked
+# Book ID
+class PersonPreference(UserMixin, db.Model):
+    id = db.Column(db.Integer,primary_key = True)
+    uid = db.Column(db.Integer, db.ForeignKey('person.id',ondelete='CASCADE'))
+    book_id = db.Column(db.BigInteger, nullable=True)
+    isLike = db.Column(db.Boolean, nullable=True)
+    
+    def __repr__(self) -> str:
+        return '<PersonPreference%r>' % self.id
 
 class Review(db.Model):
     '''
@@ -48,25 +72,14 @@ class Review(db.Model):
     def __repr__(self) -> str:
         return '<Review%r>' % self.id
 
-# class Movies(db.Model):
-#     '''
-#     Movie Model
-#     base > Movie (by ID)
-#     When a review is submitted, check if the ID is in the database
-#     IF NOT add the movie (ID, title) and the review
-#     IF EXISTING add review to Movie ID table
-#     '''
-#     id = db.Column(db.Integer, primary_key=True)
-#     movie_id = db.Column(db.Integer,unique=True,nullable=False)
-#     title = db.Column(db.String(80), unique=True,nullable=False)
 
-#     def __repr__(self) ->str:
-#         return '<Movies%r' % self.id
 
 
 #Get Server to talk to Database
 with app.app_context():
     db.create_all()
+engine = db.create_engine('postgresql://swe_milestone:jthJxRTUWSUEd0z@localhost:5432')
+conn = engine.connect() 
 
 db.init_app(app=app)
 login_manager = LoginManager()
@@ -112,20 +125,27 @@ def register_validate_username(username_input):
         return False
     return True
 
-    
+
 @app.route('/login', methods=['GET','POST'])
 def login():
     return flask.render_template('login.html')
 
+
 @app.route('/handle_login',methods=['GET','POST'])
 def handle_login():
+    # get form info
     user_input=flask.request.form
     username_input = user_input['username_input']
     email_input = user_input['email_input']
+    #create perso \n object
     existing_user = Person.query.filter_by(username=username_input,email=email_input).first()
+    
+    # print("EXISTING: "+ str(existing_user.id))
     if existing_user:
+        uid = existing_user.id
         login_user(existing_user)
-        return flask.redirect(flask.url_for('index_page'))
+        # Set UID On Login
+        return flask.redirect(flask.url_for('index_page',uid=uid))
     else:
         flask.flash('Incorrect Credentials')
         return flask.redirect(flask.url_for('login'))
@@ -133,53 +153,77 @@ def handle_login():
 
 # ------- Login Required -------
 
-@app.route('/index',methods=['GET','POST'])
+@app.route('/index/<uid>',methods=['GET','POST'])
 @login_required
-def index_page():
+def index_page(uid):
     '''Load Landing Page
         returns: index home page
     '''
-    # movie_title,movie_overview,movie_genre,movie_poster_path,movie_id = cc.get_top_10_weekly_trending_movies(TMDB_API_KEY)
-    movie_dict = cc.get_top_10_weekly_trending_movies(TMDB_API_KEY)
-    movie_wiki_page = cc.get_wiki_page(movie_title=movie_dict['title'])
-    # cc.open_wiki_page(movie_wiki_page) #Opens Wiki page in a new tab
-    pull_reviews(movie_dict['id'])
+     
+
+    liked_books = []
+    dislike_books =[]
+    preferences = PersonPreference.query.filter_by(uid=uid).all()    
+    for p in preferences:
+        if p.isLike is False:
+            dislike_books.append(p.book_id)
+        else:
+            liked_books.append(p.book_id)
+    # print(dislike_books, liked_books)
+    
+    i = 1
+    rec_titles,rec_isbn,rec_book_url,rec_book_author = br.get_list_of_books(uid, liked_books=liked_books,disliked_books=dislike_books)
+    
+    for isbn in rec_isbn:
+        # print(str(int(isbn)) + ":" +str(i))
+        try:
+            if int(isbn) in liked_books:
+                i+=1
+            if int(isbn) in dislike_books:
+                i+=1
+        except:
+            i += 1
+        
     return flask.render_template(
         'index.html',
-        movie_title=movie_dict['title'],
-        movie_overview=movie_dict['overview'],
-        movie_poster_path=movie_dict['poster_url'],
-        movie_genre=movie_dict['genres'],
-        wiki_link=movie_wiki_page,movie_id=movie_dict['id'],
-        username = current_user.username,
-        reviews = pull_reviews(movie_dict['id'])
+        uid=uid,
+        book_id=rec_isbn[i],
+        book_title=rec_titles[i],
+        book_def=rec_book_author[i],
+        img_path=rec_book_url[i]
         )
-def pull_reviews(movie_id):
-    review_dict = dict()
-    reviews = Review.query.filter_by(movie_id=movie_id).all()
-    return reviews
-    # print("Reviews")
-    # for result in reviews:
-    #     print(result, result.movie_id, result.user,result.rating,result.comment)
-    #     review_dict.
 
 
-@login_required
-@app.route('/handle_review_submit', methods=['GET','POST'])
-def handle_review_submit():
-    review_input = flask.request.form
-    review_user = review_input['username']
-    review_movie_id = review_input['movie_id']
-    review_rating = review_input['movie_rating']
-    review_comment = review_input['movie_comment']
-    # print(review_comment, review_movie_id,review_rating,review_user)
-    created_review = Review(movie_id=review_movie_id,rating=review_rating,user=review_user,comment=review_comment)
-    db.session.add(created_review)
+@app.after_request
+def after_request(response):
+    response.headers["Cache-Control"] = "no-store, max-age=0"
+    return response
+
+@app.route('/handle_dislike_submit', methods=["GET","POST"])
+def handle_dislike_submit():
+    print("dislike")
+    dislike_input = flask.request.form
+    dislike_book_id = dislike_input['book_id']
+    uid = dislike_input['uid']
+    print(uid, dislike_book_id)
+    person_preference = PersonPreference(uid=uid,book_id=dislike_book_id,isLike=0)
+    db.session.add(person_preference)
     db.session.commit()
-
-    flask.flash("Movie review has been submitted")
-    return flask.redirect(flask.url_for('index_page'))
-
+    
+    return flask.redirect(flask.url_for('index_page',uid=uid))
+    
+@app.route('/handle_like_submit', methods=["GET","POST"])
+def handle_like_submit():
+    
+    like_input = flask.request.form
+    like_book_id = like_input['book_id']
+    uid = like_input['uid']
+    # print(uid, like_book_id)
+    person_preference = PersonPreference(uid=uid,book_id=like_book_id,isLike=1)
+    db.session.add(person_preference)
+    db.session.commit()
+    return flask.redirect(flask.url_for('index_page',uid=uid))
+   
 
 if __name__ == "__main__":
 #     # Run App
