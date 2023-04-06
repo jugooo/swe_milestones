@@ -11,7 +11,6 @@ flask_sqlalchemy == 3.0.2
 numpy == 1.24.2
 # Flask-Login==0.6.2
 psycopg2-binary == 2.9.6
-# psycopg2 == 2.9.5
 scikit-surprise ==1.0.4
 scikit-learn==0.24.1
 plotly == 5.14.0
