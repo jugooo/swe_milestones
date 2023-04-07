@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import psycopg2
 # from static.PersonModel import Person
-import static.custom_classes as cc
+# import static.custom_classes as cc
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager, login_user,current_user,login_required

@@ -1,2 +1,2 @@
 # Modify this Procfile to fit your needs
-web: gunicorn nnguyen-swe-milestone:app
+web: gunicorn swe-milestone:app

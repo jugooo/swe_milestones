@@ -1,5 +1,5 @@
-from random import randint
-import requests
+# from random import randint
+# import requests
 
 
 #Retrieve top 10 movies from Movie-API
