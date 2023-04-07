@@ -25,7 +25,7 @@ algo = SVD()
 # Train the algorithm on the training set
 algo.fit(trainset)
 # Define a function for recommending books based on user input
-def recommend_books(user_id, liked_books=[], disliked_books=[], n=30):
+def recommend_books(user_id, liked_books=[], disliked_books=[], n=10):
     # Get a list of all book ISBNs
     book_isbns = ratings['ISBN'].unique()
 
