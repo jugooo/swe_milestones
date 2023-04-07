@@ -2,8 +2,6 @@ import flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 import psycopg2
-# from static.PersonModel import Person
-# import static.custom_classes as cc
 from dotenv import load_dotenv
 import os
 from flask_login import LoginManager, login_user,current_user,login_required
@@ -16,7 +14,7 @@ import book_recommendation as br
 
 #Set Environment Variables
 load_dotenv()
-TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+# TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 DATABASE_URL = os.getenv('DATABASE_URL')
 # TMDB_API_KEY = ""
 
