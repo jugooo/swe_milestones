@@ -6,8 +6,8 @@ import pandas as pd
 #uid = input('UID:')
 # Load book data into Pandas DataFrame
 #error_bad_lines=False,
-ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';',on_bad_lines='skip', encoding="latin-1")
-# books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', on_bad_lines='skip', encoding="latin-1")
+ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';',on_bad_lines='skip', encoding="latin-1", nrows=300)
+books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', on_bad_lines='skip', encoding="latin-1", nrows=300)
 # users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=';',on_bad_lines='skip', encoding="latin-1")
 
 # Define the rating scale
