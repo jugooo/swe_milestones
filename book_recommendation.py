@@ -7,7 +7,7 @@ import pandas as pd
 # Load book data into Pandas DataFrame
 #error_bad_lines=False,
 ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';',on_bad_lines='skip', encoding="latin-1")
-books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', on_bad_lines='skip', encoding="latin-1")
+# books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', on_bad_lines='skip', encoding="latin-1")
 # users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=';',on_bad_lines='skip', encoding="latin-1")
 
 # Define the rating scale
