@@ -181,6 +181,7 @@ def index_page(uid):
                 i+=1
         except:
             i += 1
+            # pass
         
     return flask.render_template(
         'index.html',

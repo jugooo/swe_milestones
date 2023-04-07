@@ -6,9 +6,9 @@ import pandas as pd
 #uid = input('UID:')
 # Load book data into Pandas DataFrame
 #error_bad_lines=False,
-ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';',on_bad_lines='skip', encoding="latin-1", nrows=300)
-books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', on_bad_lines='skip', encoding="latin-1", nrows=300)
-users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=';',on_bad_lines='skip', encoding="latin-1")
+ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=',',on_bad_lines='skip', encoding="latin-1")
+books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=',', on_bad_lines='skip', encoding="latin-1")
+users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=',',on_bad_lines='skip', encoding="latin-1")
 
 # Define the rating scale
 reader = Reader(rating_scale=(1, 10))
@@ -25,7 +25,7 @@ algo = SVD()
 # Train the algorithm on the training set
 algo.fit(trainset)
 # Define a function for recommending books based on user input
-def recommend_books(user_id, liked_books=[], disliked_books=[], n=10):
+def recommend_books(user_id, liked_books=[], disliked_books=[], n=50):
     # Get a list of all book ISBNs
     book_isbns = ratings['ISBN'].unique()
 
