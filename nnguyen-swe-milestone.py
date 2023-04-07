@@ -15,7 +15,8 @@ import book_recommendation as br
 #Set Environment Variables
 load_dotenv()
 # TMDB_API_KEY = os.getenv('TMDB_API_KEY')
-DATABASE_URL = os.getenv('DATABASE_URL')
+# DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL= process.env.DATABASE_URL
 # TMDB_API_KEY = ""
 
 #Initalize App
