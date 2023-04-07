@@ -5,9 +5,10 @@ import pandas as pd
 
 #uid = input('UID:')
 # Load book data into Pandas DataFrame
-ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';', error_bad_lines=False, encoding="latin-1")
-books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';', error_bad_lines=False, encoding="latin-1")
-users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=';', error_bad_lines=False, encoding="latin-1")
+#error_bad_lines=False,
+ratings = pd.read_csv('BX-CSV-Dump/BX-Book-Ratings.csv', sep=';', encoding="latin-1")
+books = pd.read_csv('BX-CSV-Dump/BX-Books.csv', sep=';',  encoding="latin-1")
+users = pd.read_csv('BX-CSV-Dump/BX-Users.csv', sep=';', encoding="latin-1")
 
 # Define the rating scale
 reader = Reader(rating_scale=(1, 10))
